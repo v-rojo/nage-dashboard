@@ -1,0 +1,18 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "env": {
+    "ANTHROPIC_API_KEY": {
+      "description": "Claude API key for AI predictions and recommendations",
+      "required": true
+    },
+    "NEXT_PUBLIC_CLAUDE_MODEL": {
+      "description": "Claude model to use",
+      "default": "claude-3-5-sonnet-20241022"
+    }
+  },
+  "public": true,
+  "regions": ["sfo1"]
+}
