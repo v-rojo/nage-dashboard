@@ -3,15 +3,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "env": {
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "installCommand": "npm install",
-  "framework": "nextjs",
-  "env": ["ANTHROPIC_API_KEY", "NEXT_PUBLIC_CLAUDE_MODEL"],
-  "public": true,
-  "regions": ["sfo1"]
-},
   "public": true,
   "regions": ["sfo1"]
 }
