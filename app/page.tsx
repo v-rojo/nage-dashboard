@@ -1,5 +1,7 @@
 'use client'
 
+import { BarChart3, Bot, AlertTriangle, CheckCircle } from 'lucide-react'
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
@@ -7,10 +9,10 @@ export default function Home() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            🏥 NAGE Dashboard
+            NAGE Dashboard
           </h1>
           <p className="text-xl text-gray-600 mb-8">
-            AI-Powered Hospital Inventory Management & Analysis Engine
+            AI-Powered Hospital Inventory Management &amp; Analysis Engine
           </p>
           <p className="text-lg text-gray-600 mb-12">
             Real-time inventory tracking with Claude AI predictions
@@ -23,14 +25,16 @@ export default function Home() {
             href="/dashboard"
             className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors"
           >
-            Enter Dashboard →
+            Enter Dashboard
           </a>
         </div>
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-3 gap-8 mb-16">
           <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-            <div className="text-4xl mb-4">📊</div>
+            <div className="mb-4 flex justify-center">
+              <BarChart3 className="h-10 w-10 text-blue-600" />
+            </div>
             <h3 className="text-xl font-bold mb-3 text-gray-900">Real-time Tracking</h3>
             <p className="text-gray-600">
               Monitor inventory levels across all departments with live updates and color-coded status indicators.
@@ -38,7 +42,9 @@ export default function Home() {
           </div>
 
           <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-            <div className="text-4xl mb-4">🤖</div>
+            <div className="mb-4 flex justify-center">
+              <Bot className="h-10 w-10 text-blue-600" />
+            </div>
             <h3 className="text-xl font-bold mb-3 text-gray-900">AI Predictions</h3>
             <p className="text-gray-600">
               Claude AI analyzes consumption patterns to forecast demand and prevent costly stockouts.
@@ -46,7 +52,9 @@ export default function Home() {
           </div>
 
           <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-            <div className="text-4xl mb-4">⚠️</div>
+            <div className="mb-4 flex justify-center">
+              <AlertTriangle className="h-10 w-10 text-blue-600" />
+            </div>
             <h3 className="text-xl font-bold mb-3 text-gray-900">Smart Alerts</h3>
             <p className="text-gray-600">
               Automatic notifications for critical stock levels, expirations, and procurement opportunities.
@@ -59,19 +67,19 @@ export default function Home() {
           <h2 className="text-2xl font-bold mb-6 text-gray-900">Why NAGE?</h2>
           <ul className="space-y-3">
             <li className="flex items-center text-gray-700">
-              <span className="text-green-500 font-bold mr-3">✓</span>
+              <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
               Reduce stockouts by up to 40% with AI demand forecasting
             </li>
             <li className="flex items-center text-gray-700">
-              <span className="text-green-500 font-bold mr-3">✓</span>
+              <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
               Lower inventory costs through optimized procurement recommendations
             </li>
             <li className="flex items-center text-gray-700">
-              <span className="text-green-500 font-bold mr-3">✓</span>
+              <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
               Improve department satisfaction with real-time supply visibility
             </li>
             <li className="flex items-center text-gray-700">
-              <span className="text-green-500 font-bold mr-3">✓</span>
+              <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
               Minimize waste with expiration date tracking and analytics
             </li>
           </ul>

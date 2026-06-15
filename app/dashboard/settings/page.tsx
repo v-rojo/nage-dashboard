@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Globe, Bell, Smartphone, Database } from 'lucide-react'
 
 export default function SettingsPage() {
   const [s, setS] = useState({
@@ -42,7 +43,7 @@ export default function SettingsPage() {
 
           {/* General */}
           <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-soft">
-            <h2 className="mb-4 text-sm font-semibold text-gray-800">🌍 General</h2>
+            <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-800"><Globe className="h-4 w-4" /> General</h2>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
@@ -50,9 +51,9 @@ export default function SettingsPage() {
                   <p className="text-xs text-gray-400">Idioma de la interfaz</p>
                 </div>
                 <select value={s.language} onChange={e => setS(p => ({ ...p, language: e.target.value }))} className="rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-sm text-gray-900 focus:outline-none">
-                  <option value="es">🇪🇸 Español</option>
-                  <option value="en">🇬🇧 English</option>
-                  <option value="ca">🟡 Català</option>
+                  <option value="es">Español</option>
+                  <option value="en">English</option>
+                  <option value="ca">Català</option>
                 </select>
               </div>
               <div className="flex items-center justify-between">
@@ -72,7 +73,7 @@ export default function SettingsPage() {
 
           {/* Alerts */}
           <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-soft">
-            <h2 className="mb-4 text-sm font-semibold text-gray-800">🔔 Alertas de inventario</h2>
+            <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-800"><Bell className="h-4 w-4" /> Alertas de inventario</h2>
             <div className="space-y-4">
               {[
                 { field: 'criticalAlerts' as const, label: 'Alertas críticas', desc: 'Stock por debajo del 60% del mínimo', badge: 'Recomendado' },
@@ -95,7 +96,7 @@ export default function SettingsPage() {
 
           {/* Notifications */}
           <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-soft">
-            <h2 className="mb-4 text-sm font-semibold text-gray-800">📱 Notificaciones externas</h2>
+            <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-800"><Smartphone className="h-4 w-4" /> Notificaciones externas</h2>
             <div className="space-y-4">
               {[
                 { field: 'emailNotifications' as const, label: 'Notificaciones por email', desc: 'Recibir alertas en el correo electrónico' },
@@ -114,7 +115,7 @@ export default function SettingsPage() {
 
           {/* Data */}
           <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-soft">
-            <h2 className="mb-4 text-sm font-semibold text-gray-800">🗄️ Datos</h2>
+            <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-800"><Database className="h-4 w-4" /> Datos</h2>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-900">Retención de históricos</p>

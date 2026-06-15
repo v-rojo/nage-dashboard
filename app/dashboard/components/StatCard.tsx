@@ -1,5 +1,7 @@
 'use client'
 
+import { ReactNode } from 'react'
+
 export function StatCard({
   label,
   value,
@@ -11,7 +13,7 @@ export function StatCard({
   value: number | string
   sub?: string
   color: 'red' | 'amber' | 'green' | 'blue' | 'gray'
-  icon: string
+  icon: ReactNode
 }) {
   const ring: Record<string, string> = {
     red: 'border-red-200 bg-red-50',
@@ -32,7 +34,7 @@ export function StatCard({
     <div className={`rounded-xl border p-4 ${ring[color]}`}>
       <div className="mb-1 flex items-center justify-between">
         <span className="text-xs font-medium text-gray-500">{label}</span>
-        <span className="text-lg">{icon}</span>
+        <span className="flex items-center justify-center">{icon}</span>
       </div>
       <p className={`text-2xl font-bold ${text[color]}`}>{value}</p>
       {sub && <p className="mt-0.5 text-xs text-gray-400">{sub}</p>}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { Camera, CheckCircle, AlertTriangle, Building2, Package, Zap, FileText } from 'lucide-react'
 import { MADRID_HOSPITALS } from '@/lib/mock-data/hospitals'
 import { useNotifications } from '../context/notifications'
 
@@ -20,10 +21,10 @@ const ITEMS = [
 ]
 
 const URGENCY_OPTIONS = [
-  { value: 'critical', label: '🔴 Crítico', desc: 'Necesario en menos de 2 horas', color: 'border-red-300 bg-red-50 text-red-700' },
-  { value: 'high',     label: '🟠 Alto',    desc: 'Necesario hoy',                color: 'border-amber-300 bg-amber-50 text-amber-700' },
-  { value: 'medium',   label: '🟡 Medio',   desc: 'Necesario en 1-3 días',        color: 'border-yellow-300 bg-yellow-50 text-yellow-700' },
-  { value: 'low',      label: '🟢 Bajo',    desc: 'Reposición planificada',       color: 'border-green-300 bg-green-50 text-green-700' },
+  { value: 'critical', label: 'Crítico', desc: 'Necesario en menos de 2 horas', color: 'border-red-300 bg-red-50 text-red-700' },
+  { value: 'high',     label: 'Alto',    desc: 'Necesario hoy',                color: 'border-amber-300 bg-amber-50 text-amber-700' },
+  { value: 'medium',   label: 'Medio',   desc: 'Necesario en 1-3 días',        color: 'border-yellow-300 bg-yellow-50 text-yellow-700' },
+  { value: 'low',      label: 'Bajo',    desc: 'Reposición planificada',       color: 'border-green-300 bg-green-50 text-green-700' },
 ]
 
 type ScanState = 'idle' | 'scanning' | 'success'
@@ -65,8 +66,8 @@ function QRScanner({ onScan }: { onScan: (data: string) => void }) {
 
       {state === 'idle' && (
         <div className="flex flex-col items-center gap-4 py-6">
-          <div className="flex h-24 w-24 items-center justify-center rounded-xl border-2 border-gray-200 bg-white text-5xl shadow-inner">
-            📷
+          <div className="flex h-24 w-24 items-center justify-center rounded-xl border-2 border-gray-200 bg-white shadow-inner">
+            <Camera className="h-12 w-12 text-gray-400" />
           </div>
           <div className="text-center">
             <p className="text-sm font-medium text-gray-700">Escanear etiqueta del producto</p>
@@ -76,7 +77,7 @@ function QRScanner({ onScan }: { onScan: (data: string) => void }) {
             onClick={startScan}
             className="flex items-center gap-2 rounded-lg bg-gray-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
           >
-            <span>📷</span> Activar cámara
+            <Camera className="h-4 w-4" /> Activar cámara
           </button>
         </div>
       )}
@@ -137,8 +138,8 @@ function QRScanner({ onScan }: { onScan: (data: string) => void }) {
 
       {state === 'success' && (
         <div className="flex flex-col items-center gap-3 py-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-100 text-3xl">
-            ✅
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
+            <CheckCircle className="h-8 w-8 text-green-600" />
           </div>
           <p className="text-sm font-semibold text-green-700">Código leído correctamente</p>
           <div className="w-full rounded-lg border border-green-200 bg-green-50 px-4 py-3">
@@ -219,8 +220,8 @@ export default function SupplyRequestPage() {
         <div className="flex flex-1 items-center justify-center p-6">
           <div className="w-full max-w-md text-center">
             <div className="mb-6 flex justify-center">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-4xl">
-                ✅
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
+                <CheckCircle className="h-10 w-10 text-green-600" />
               </div>
             </div>
             <h2 className="mb-2 text-xl font-bold text-gray-900">Solicitud enviada</h2>
@@ -287,7 +288,9 @@ export default function SupplyRequestPage() {
 
             {/* Hospitals */}
             <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-soft">
-              <h2 className="mb-4 text-sm font-semibold text-gray-800">🏥 Hospitales</h2>
+              <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-800">
+                <Building2 className="h-4 w-4" /> Hospitales
+              </h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="mb-1.5 block text-xs font-medium text-gray-600">Hospital solicitante (origen)</label>
@@ -334,7 +337,9 @@ export default function SupplyRequestPage() {
 
             {/* Item & Quantity */}
             <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-soft">
-              <h2 className="mb-4 text-sm font-semibold text-gray-800">📦 Suministro solicitado</h2>
+              <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-800">
+                <Package className="h-4 w-4" /> Suministro solicitado
+              </h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="sm:col-span-2">
                   <label className="mb-1.5 block text-xs font-medium text-gray-600">Suministro</label>
@@ -349,7 +354,7 @@ export default function SupplyRequestPage() {
                   {errors.item && <p className="mt-1 text-xs text-red-500">{errors.item}</p>}
                   {form.scannedCode && (
                     <p className="mt-1.5 flex items-center gap-1 text-[10px] text-green-600">
-                      <span>✅</span> Rellenado por QR scan
+                      <CheckCircle className="h-3 w-3" /> Rellenado por QR scan
                     </p>
                   )}
                 </div>
@@ -379,7 +384,9 @@ export default function SupplyRequestPage() {
 
             {/* Urgency */}
             <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-soft">
-              <h2 className="mb-4 text-sm font-semibold text-gray-800">⚡ Nivel de urgencia</h2>
+              <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-800">
+                <Zap className="h-4 w-4" /> Nivel de urgencia
+              </h2>
               <div className="grid gap-2 sm:grid-cols-2">
                 {URGENCY_OPTIONS.map(opt => (
                   <label
@@ -409,7 +416,9 @@ export default function SupplyRequestPage() {
 
             {/* Notes */}
             <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-soft">
-              <h2 className="mb-3 text-sm font-semibold text-gray-800">📝 Notas adicionales</h2>
+              <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-800">
+                <FileText className="h-4 w-4" /> Notas adicionales
+              </h2>
               <textarea
                 rows={3}
                 value={form.notes}
@@ -422,9 +431,9 @@ export default function SupplyRequestPage() {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full rounded-xl bg-gray-900 px-6 py-3.5 text-base font-semibold text-white hover:bg-gray-800 transition-colors shadow-soft"
+              className="w-full flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-6 py-3.5 text-base font-semibold text-white hover:bg-gray-800 transition-colors shadow-soft"
             >
-              🚨 Enviar alarma al hospital receptor
+              <AlertTriangle className="h-5 w-5" /> Enviar alarma al hospital receptor
             </button>
           </form>
         </div>

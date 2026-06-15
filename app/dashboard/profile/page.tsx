@@ -1,25 +1,26 @@
 'use client'
 
 import { useState } from 'react'
+import { Stethoscope, Building2, Wrench, Check, Pencil } from 'lucide-react'
 
 type Role = 'doctor' | 'admin' | 'engineer'
 
-const ROLE_CONFIG: Record<Role, { label: string; icon: string; color: string; perms: string[] }> = {
+const ROLE_CONFIG: Record<Role, { label: string; icon: React.ReactNode; color: string; perms: string[] }> = {
   doctor: {
     label: 'Doctor / Médico',
-    icon: '👨‍⚕️',
+    icon: <Stethoscope className="h-8 w-8" />,
     color: 'bg-blue-100 text-blue-700 border-blue-200',
     perms: ['Ver inventario de su departamento', 'Crear solicitudes de suministro', 'Ver alertas críticas', 'Ver histórico de consumo'],
   },
   admin: {
     label: 'Administrador',
-    icon: '🏥',
+    icon: <Building2 className="h-8 w-8" />,
     color: 'bg-purple-100 text-purple-700 border-purple-200',
     perms: ['Acceso completo al inventario', 'Gestionar solicitudes de suministro', 'Configurar alertas y umbrales', 'Ver reportes financieros', 'Gestionar usuarios', 'Dashboard general CCAA'],
   },
   engineer: {
     label: 'Ingeniero Biomédico',
-    icon: '⚙️',
+    icon: <Wrench className="h-8 w-8" />,
     color: 'bg-amber-100 text-amber-700 border-amber-200',
     perms: ['Ver equipamiento médico', 'Gestionar mantenimiento', 'Ver inventario técnico', 'Crear órdenes de reparación'],
   },
@@ -55,21 +56,21 @@ export default function ProfilePage() {
           {/* Avatar & Role */}
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-soft">
             <div className="flex flex-col items-center gap-4 sm:flex-row">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100 text-4xl flex-shrink-0">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100 flex-shrink-0">
                 {cfg.icon}
               </div>
               <div className="flex-1 text-center sm:text-left">
                 <h2 className="text-xl font-bold text-gray-900">{profile.name}</h2>
                 <p className="text-sm text-gray-500">{profile.email}</p>
-                <span className={`mt-2 inline-block rounded-full border px-3 py-1 text-xs font-semibold ${cfg.color}`}>
-                  {cfg.icon} {cfg.label}
+                <span className={`mt-2 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold ${cfg.color}`}>
+                  {cfg.icon && <span className="[&>svg]:h-3 [&>svg]:w-3">{cfg.icon}</span>} {cfg.label}
                 </span>
               </div>
               <button
                 onClick={() => { setDraft(profile); setEditing(true) }}
-                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                className="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
               >
-                ✏️ Editar
+                <Pencil className="h-3.5 w-3.5" /> Editar
               </button>
             </div>
           </div>
@@ -84,7 +85,7 @@ export default function ProfilePage() {
                   onClick={() => setRole(key)}
                   className={`rounded-lg border-2 p-3 text-left transition-all ${role === key ? `${c.color} border-current` : 'border-gray-100 hover:border-gray-200'}`}
                 >
-                  <div className="text-2xl mb-1">{c.icon}</div>
+                  <div className="mb-1 [&>svg]:h-6 [&>svg]:w-6">{c.icon}</div>
                   <p className="text-xs font-semibold">{c.label}</p>
                 </button>
               ))}
@@ -97,7 +98,7 @@ export default function ProfilePage() {
             <ul className="space-y-2">
               {cfg.perms.map(p => (
                 <li key={p} className="flex items-center gap-2 text-sm text-gray-700">
-                  <span className="text-green-500 font-bold">✓</span> {p}
+                  <Check className="h-4 w-4 text-green-500 flex-shrink-0" /> {p}
                 </li>
               ))}
             </ul>

@@ -3,18 +3,19 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import { Home, Globe, Building2, Package, Bell, User, Settings, Network, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useNotifications } from '../context/notifications'
 
 const NAV_TOP = [
-  { href: '/', icon: '🏠', label: 'Home' },
-  { href: '/dashboard/general', icon: '🇪🇸', label: 'Dashboard General', sub: 'Todos los hospitales' },
-  { href: '/dashboard', icon: '🏥', label: 'Main Dashboard', sub: 'Mi hospital' },
-  { href: '/dashboard/supply-request', icon: '📦', label: 'Supply Request', sub: 'Solicitar suministro', badge: true },
+  { href: '/', icon: <Home className="h-4 w-4" />, label: 'Home' },
+  { href: '/dashboard/general', icon: <Globe className="h-4 w-4" />, label: 'Dashboard General', sub: 'Todos los hospitales' },
+  { href: '/dashboard', icon: <Building2 className="h-4 w-4" />, label: 'Main Dashboard', sub: 'Mi hospital' },
+  { href: '/dashboard/supply-request', icon: <Package className="h-4 w-4" />, label: 'Supply Request', sub: 'Solicitar suministro', badge: true },
 ]
 
 const NAV_BOTTOM = [
-  { href: '/dashboard/profile', icon: '👤', label: 'Profile' },
-  { href: '/dashboard/settings', icon: '⚙️', label: 'Settings' },
+  { href: '/dashboard/profile', icon: <User className="h-4 w-4" />, label: 'Profile' },
+  { href: '/dashboard/settings', icon: <Settings className="h-4 w-4" />, label: 'Settings' },
 ]
 
 const URGENCY_DOT: Record<string, string> = {
@@ -76,7 +77,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
             className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors"
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            {collapsed ? '→' : '←'}
+            {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
           </button>
         </div>
 
@@ -95,7 +96,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
                 }`}
                 title={collapsed ? item.label : undefined}
               >
-                <span className="flex-shrink-0 text-base leading-none">{item.icon}</span>
+                <span className="flex-shrink-0 leading-none">{item.icon}</span>
                 {!collapsed && (
                   <div className="min-w-0 flex-1">
                     <p className="font-medium leading-tight">{item.label}</p>
@@ -128,7 +129,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
               }`}
               title={collapsed ? 'Notificaciones' : undefined}
             >
-              <span className="flex-shrink-0 text-base leading-none">🔔</span>
+              <span className="flex-shrink-0 leading-none"><Bell className="h-4 w-4" /></span>
               {!collapsed && (
                 <div className="min-w-0 flex-1 text-left">
                   <p className="font-medium leading-tight">Notificaciones</p>
@@ -210,7 +211,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
                 }`}
                 title={collapsed ? item.label : undefined}
               >
-                <span className="flex-shrink-0 text-base leading-none">{item.icon}</span>
+                <span className="flex-shrink-0 leading-none">{item.icon}</span>
                 {!collapsed && <span className="font-medium">{item.label}</span>}
               </Link>
             )
@@ -221,7 +222,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
             className={`flex items-center gap-3 rounded-lg px-2.5 py-2.5 ${collapsed ? 'justify-center' : ''}`}
             title="IP de red local"
           >
-            <span className="flex-shrink-0 text-base leading-none">🌐</span>
+            <span className="flex-shrink-0 leading-none"><Network className="h-4 w-4 text-gray-400" /></span>
             {!collapsed && (
               <div>
                 <p className="text-[10px] text-gray-400 leading-none">IP Local</p>

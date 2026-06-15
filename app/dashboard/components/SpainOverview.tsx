@@ -1,19 +1,20 @@
 'use client'
 
 import { useState } from 'react'
+import { AlertTriangle, AlertCircle, CheckCircle, Package, MapPin } from 'lucide-react'
 import { SPAIN_CCAA, getInventoryStats } from '@/lib/mock-data/hospitals'
 import { StatusBadge } from './StatusBadge'
 import { StatCard } from './StatCard'
 import { StockBar } from './StockBar'
 import { InventoryItem } from '@/lib/types'
 
-const CCAA_FLAG: Record<string, string> = {
-  madrid: '🏙️',
-  cataluna: '🌊',
-  andalucia: '☀️',
-  cv: '🍊',
-  galicia: '🌧️',
-  pv: '⛰️',
+const CCAA_INITIALS: Record<string, string> = {
+  madrid: 'MD',
+  cataluna: 'CT',
+  andalucia: 'AN',
+  cv: 'CV',
+  galicia: 'GA',
+  pv: 'PV',
 }
 
 export function SpainOverview() {
@@ -35,7 +36,7 @@ export function SpainOverview() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold text-gray-900">🇪🇸 Resumen Nacional — España</h2>
+        <h2 className="text-xl font-bold text-gray-900">Resumen Nacional — España</h2>
         <p className="text-sm text-gray-500">
           {SPAIN_CCAA.length} comunidades autónomas · {totalHospitals} hospitales · {totalBeds.toLocaleString()} camas
         </p>
@@ -43,16 +44,18 @@ export function SpainOverview() {
 
       {/* Global KPIs */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <StatCard label="Alertas Críticas" value={globalStats.critical} color="red" icon="🚨" sub="en toda España" />
-        <StatCard label="Stock Bajo" value={globalStats.low} color="amber" icon="⚠️" sub="por debajo mínimo" />
-        <StatCard label="Suministros OK" value={globalStats.healthy} color="green" icon="✅" sub="en rango óptimo" />
-        <StatCard label="Exceso Stock" value={globalStats.overstocked} color="blue" icon="📦" sub="sobre el máximo" />
+        <StatCard label="Alertas Críticas" value={globalStats.critical} color="red" icon={<AlertTriangle className="h-4 w-4 text-red-500" />} sub="en toda España" />
+        <StatCard label="Stock Bajo" value={globalStats.low} color="amber" icon={<AlertCircle className="h-4 w-4 text-amber-500" />} sub="por debajo mínimo" />
+        <StatCard label="Suministros OK" value={globalStats.healthy} color="green" icon={<CheckCircle className="h-4 w-4 text-green-500" />} sub="en rango óptimo" />
+        <StatCard label="Exceso Stock" value={globalStats.overstocked} color="blue" icon={<Package className="h-4 w-4 text-blue-500" />} sub="sobre el máximo" />
       </div>
 
       {/* Critical items alert strip */}
       {criticalItems.length > 0 && (
         <div className="rounded-xl border border-red-200 bg-red-50 p-4">
-          <p className="mb-3 text-sm font-semibold text-red-700">🚨 Items en estado crítico (requieren acción inmediata)</p>
+          <p className="mb-3 flex items-center gap-2 text-sm font-semibold text-red-700">
+            <AlertTriangle className="h-4 w-4" /> Items en estado crítico (requieren acción inmediata)
+          </p>
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {criticalItems.map(item => {
               const hospital = SPAIN_CCAA.flatMap(c => c.hospitals).find(h =>
@@ -94,7 +97,9 @@ export function SpainOverview() {
                   onClick={() => setExpandedCCAA(isExpanded ? null : ccaa.id)}
                   className="w-full flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors text-left"
                 >
-                  <span className="text-2xl">{CCAA_FLAG[ccaa.id] ?? '🏥'}</span>
+                  <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-xs font-bold text-gray-600">
+                    {CCAA_INITIALS[ccaa.id] ?? 'ES'}
+                  </span>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="font-semibold text-gray-900">{ccaa.name}</span>
@@ -140,14 +145,24 @@ export function SpainOverview() {
                             <div className="flex items-start justify-between gap-2 mb-2">
                               <div>
                                 <p className="text-xs font-semibold text-gray-900 leading-tight">{h.name}</p>
-                                <p className="text-xs text-gray-400">📍 {h.city}</p>
+                                <p className="flex items-center gap-0.5 text-xs text-gray-400"><MapPin className="h-3 w-3" /> {h.city}</p>
                               </div>
                               <StatusBadge status={hStatus} size="xs" />
                             </div>
                             <div className="flex gap-3 text-xs">
-                              {hs.critical > 0 && <span className="text-red-600">🔴 {hs.critical}</span>}
-                              {hs.low > 0 && <span className="text-amber-600">🟡 {hs.low}</span>}
-                              <span className="text-green-600">🟢 {hs.healthy}</span>
+                              {hs.critical > 0 && (
+                                <span className="flex items-center gap-1 text-red-600">
+                                  <span className="inline-block h-2 w-2 rounded-full bg-red-500" /> {hs.critical}
+                                </span>
+                              )}
+                              {hs.low > 0 && (
+                                <span className="flex items-center gap-1 text-amber-600">
+                                  <span className="inline-block h-2 w-2 rounded-full bg-amber-400" /> {hs.low}
+                                </span>
+                              )}
+                              <span className="flex items-center gap-1 text-green-600">
+                                <span className="inline-block h-2 w-2 rounded-full bg-green-500" /> {hs.healthy}
+                              </span>
                             </div>
                           </div>
                         )
