@@ -3,18 +3,30 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import {
+  Home,
+  Globe,
+  Building2,
+  Package,
+  Bell,
+  User,
+  Settings,
+  Network,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react'
 import { useNotifications } from '../context/notifications'
 
 const NAV_TOP = [
-  { href: '/', icon: '🏠', label: 'Home' },
-  { href: '/dashboard/general', icon: '🇪🇸', label: 'Dashboard General', sub: 'Todos los hospitales' },
-  { href: '/dashboard', icon: '🏥', label: 'Main Dashboard', sub: 'Mi hospital' },
-  { href: '/dashboard/supply-request', icon: '📦', label: 'Supply Request', sub: 'Solicitar suministro', badge: true },
+  { href: '/', icon: Home, label: 'Home' },
+  { href: '/dashboard/general', icon: Globe, label: 'Dashboard General', sub: 'Todos los hospitales' },
+  { href: '/dashboard', icon: Building2, label: 'Main Dashboard', sub: 'Mi hospital' },
+  { href: '/dashboard/supply-request', icon: Package, label: 'Supply Request', sub: 'Solicitar suministro', badge: true },
 ]
 
 const NAV_BOTTOM = [
-  { href: '/dashboard/profile', icon: '👤', label: 'Profile' },
-  { href: '/dashboard/settings', icon: '⚙️', label: 'Settings' },
+  { href: '/dashboard/profile', icon: User, label: 'Profile' },
+  { href: '/dashboard/settings', icon: Settings, label: 'Settings' },
 ]
 
 const URGENCY_DOT: Record<string, string> = {
@@ -37,7 +49,6 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
   const [showNotif, setShowNotif] = useState(false)
   const [ip, setIp] = useState('192.168.1.42')
 
-  // Simulate IP fetch
   useEffect(() => {
     const octets = [10, 0, Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)]
     setIp(octets.join('.'))
@@ -48,12 +59,8 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
 
   return (
     <>
-      {/* Backdrop for notification panel */}
       {showNotif && (
-        <div
-          className="fixed inset-0 z-30"
-          onClick={() => setShowNotif(false)}
-        />
+        <div className="fixed inset-0 z-30" onClick={() => setShowNotif(false)} />
       )}
 
       <aside
@@ -76,7 +83,10 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
             className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors"
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            {collapsed ? '→' : '←'}
+            {collapsed
+              ? <ChevronRight className="h-4 w-4" />
+              : <ChevronLeft className="h-4 w-4" />
+            }
           </button>
         </div>
 
@@ -84,6 +94,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
         <nav className="flex-1 space-y-0.5 overflow-y-auto px-2 py-3">
           {NAV_TOP.map(item => {
             const active = isActive(item.href)
+            const Icon = item.icon
             return (
               <Link
                 key={item.href}
@@ -95,19 +106,18 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
                 }`}
                 title={collapsed ? item.label : undefined}
               >
-                <span className="flex-shrink-0 text-base leading-none">{item.icon}</span>
+                <Icon className="h-4 w-4 flex-shrink-0" />
                 {!collapsed && (
                   <div className="min-w-0 flex-1">
                     <p className="font-medium leading-tight">{item.label}</p>
-                    {item.sub && (
+                    {'sub' in item && item.sub && (
                       <p className={`text-[10px] leading-tight mt-0.5 ${active ? 'text-gray-300' : 'text-gray-400'}`}>
                         {item.sub}
                       </p>
                     )}
                   </div>
                 )}
-                {/* Supply request has a special indicator */}
-                {item.badge && unreadCount > 0 && (
+                {'badge' in item && item.badge && unreadCount > 0 && (
                   <span className={`flex-shrink-0 rounded-full bg-red-500 text-white text-[10px] font-bold leading-none px-1.5 py-0.5 ${collapsed ? 'absolute -top-1 -right-1' : ''}`}>
                     {unreadCount}
                   </span>
@@ -119,7 +129,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
             )
           })}
 
-          {/* Notification bell */}
+          {/* Notifications */}
           <div className="relative">
             <button
               onClick={() => setShowNotif(v => !v)}
@@ -128,7 +138,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
               }`}
               title={collapsed ? 'Notificaciones' : undefined}
             >
-              <span className="flex-shrink-0 text-base leading-none">🔔</span>
+              <Bell className="h-4 w-4 flex-shrink-0" />
               {!collapsed && (
                 <div className="min-w-0 flex-1 text-left">
                   <p className="font-medium leading-tight">Notificaciones</p>
@@ -144,7 +154,6 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
               )}
             </button>
 
-            {/* Notification panel */}
             {showNotif && (
               <div
                 className="absolute left-full top-0 z-40 ml-2 w-80 rounded-xl border border-gray-200 bg-white shadow-xl"
@@ -152,11 +161,8 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
               >
                 <div className="flex items-center justify-between border-b border-gray-100 px-4 py-3">
                   <p className="text-sm font-semibold text-gray-900">Notificaciones</p>
-                  <button
-                    onClick={markAllRead}
-                    className="text-xs text-blue-600 hover:text-blue-700"
-                  >
-                    Marcar todo como leído
+                  <button onClick={markAllRead} className="text-xs text-blue-600 hover:text-blue-700">
+                    Marcar todo como leido
                   </button>
                 </div>
                 <div className="max-h-80 overflow-y-auto divide-y divide-gray-50">
@@ -177,7 +183,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
                           </p>
                           <p className="text-xs text-gray-500 truncate">{n.message}</p>
                           <p className="mt-1 text-[10px] text-gray-400">
-                            {n.fromHospital} · {timeAgo(n.timestamp)} atrás
+                            {n.fromHospital} &middot; {timeAgo(n.timestamp)} atras
                           </p>
                         </div>
                         {!n.read && (
@@ -199,6 +205,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
         <nav className="space-y-0.5 px-2 py-3">
           {NAV_BOTTOM.map(item => {
             const active = isActive(item.href)
+            const Icon = item.icon
             return (
               <Link
                 key={item.href}
@@ -210,7 +217,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
                 }`}
                 title={collapsed ? item.label : undefined}
               >
-                <span className="flex-shrink-0 text-base leading-none">{item.icon}</span>
+                <Icon className="h-4 w-4 flex-shrink-0" />
                 {!collapsed && <span className="font-medium">{item.label}</span>}
               </Link>
             )
@@ -221,7 +228,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
             className={`flex items-center gap-3 rounded-lg px-2.5 py-2.5 ${collapsed ? 'justify-center' : ''}`}
             title="IP de red local"
           >
-            <span className="flex-shrink-0 text-base leading-none">🌐</span>
+            <Network className="h-4 w-4 flex-shrink-0 text-gray-400" />
             {!collapsed && (
               <div>
                 <p className="text-[10px] text-gray-400 leading-none">IP Local</p>

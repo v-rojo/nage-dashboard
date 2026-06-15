@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { AlertTriangle, TrendingDown, CheckCircle, TrendingUp, MapPin } from 'lucide-react'
 import { Hospital } from '@/lib/mock-data/hospitals'
 import { InventoryItem } from '@/lib/types'
 import { StatusBadge } from './StatusBadge'
@@ -8,12 +9,12 @@ import { StockBar } from './StockBar'
 import { StatCard } from './StatCard'
 
 const DEPT_LABELS: Record<string, string> = {
-  emergency: '🚨 Emergency',
-  icu: '🫀 ICU',
-  surgery: '🔬 Surgery',
-  cardiology: '❤️ Cardiology',
-  pediatrics: '👶 Pediatrics',
-  oncology: '🧬 Oncology',
+  emergency: 'Emergency',
+  icu: 'ICU',
+  surgery: 'Surgery',
+  cardiology: 'Cardiology',
+  pediatrics: 'Pediatrics',
+  oncology: 'Oncology',
 }
 
 function InventoryTable({ items }: { items: InventoryItem[] }) {
@@ -85,19 +86,20 @@ export function HospitalView({ hospital }: { hospital: Hospital }) {
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-xl font-bold text-gray-900">{hospital.name}</h2>
-          <p className="text-sm text-gray-500">
-            📍 {hospital.city} · {hospital.beds} camas · {hospital.departments.length} departamentos
+          <p className="text-sm text-gray-500 flex items-center gap-1">
+            <MapPin className="h-3.5 w-3.5" />
+            {hospital.city} &middot; {hospital.beds} camas &middot; {hospital.departments.length} departamentos
           </p>
         </div>
-        <span className="text-xs text-gray-400">Última actualización: hace 2 min</span>
+        <span className="text-xs text-gray-400">Ultima actualizacion: hace 2 min</span>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <StatCard label="Crítico" value={stats.critical} color="red" icon="🔴" sub="requiere acción" />
-        <StatCard label="Stock Bajo" value={stats.low} color="amber" icon="🟡" sub="por debajo del mínimo" />
-        <StatCard label="Normal" value={stats.healthy} color="green" icon="🟢" sub="en rango óptimo" />
-        <StatCard label="Exceso" value={stats.overstocked} color="blue" icon="🔵" sub="por encima del máximo" />
+        <StatCard label="Critico" value={stats.critical} color="red" icon={AlertTriangle} sub="requiere accion" />
+        <StatCard label="Stock Bajo" value={stats.low} color="amber" icon={TrendingDown} sub="por debajo del minimo" />
+        <StatCard label="Normal" value={stats.healthy} color="green" icon={CheckCircle} sub="en rango optimo" />
+        <StatCard label="Exceso" value={stats.overstocked} color="blue" icon={TrendingUp} sub="por encima del maximo" />
       </div>
 
       {/* Dept filter */}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { Camera, CheckCircle, ArrowRight, AlertTriangle, Package, FileText, Zap, Building2 } from 'lucide-react'
 import { MADRID_HOSPITALS } from '@/lib/mock-data/hospitals'
 import { useNotifications } from '../context/notifications'
 
@@ -20,10 +21,10 @@ const ITEMS = [
 ]
 
 const URGENCY_OPTIONS = [
-  { value: 'critical', label: '🔴 Crítico', desc: 'Necesario en menos de 2 horas', color: 'border-red-300 bg-red-50 text-red-700' },
-  { value: 'high',     label: '🟠 Alto',    desc: 'Necesario hoy',                color: 'border-amber-300 bg-amber-50 text-amber-700' },
-  { value: 'medium',   label: '🟡 Medio',   desc: 'Necesario en 1-3 días',        color: 'border-yellow-300 bg-yellow-50 text-yellow-700' },
-  { value: 'low',      label: '🟢 Bajo',    desc: 'Reposición planificada',       color: 'border-green-300 bg-green-50 text-green-700' },
+  { value: 'critical', label: 'Critico',  desc: 'Necesario en menos de 2 horas', color: 'border-red-300 bg-red-50 text-red-700',    dot: 'bg-red-500'    },
+  { value: 'high',     label: 'Alto',     desc: 'Necesario hoy',                 color: 'border-amber-300 bg-amber-50 text-amber-700', dot: 'bg-amber-500'  },
+  { value: 'medium',   label: 'Medio',    desc: 'Necesario en 1-3 dias',         color: 'border-yellow-300 bg-yellow-50 text-yellow-700', dot: 'bg-yellow-400' },
+  { value: 'low',      label: 'Bajo',     desc: 'Reposicion planificada',        color: 'border-green-300 bg-green-50 text-green-700',  dot: 'bg-green-500'  },
 ]
 
 type ScanState = 'idle' | 'scanning' | 'success'
@@ -60,30 +61,30 @@ function QRScanner({ onScan }: { onScan: (data: string) => void }) {
   return (
     <div className="rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 p-5">
       <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
-        Escáner QR / Código de barras
+        Escaner QR / Codigo de barras
       </p>
 
       {state === 'idle' && (
         <div className="flex flex-col items-center gap-4 py-6">
-          <div className="flex h-24 w-24 items-center justify-center rounded-xl border-2 border-gray-200 bg-white text-5xl shadow-inner">
-            📷
+          <div className="flex h-24 w-24 items-center justify-center rounded-xl border-2 border-gray-200 bg-white shadow-inner">
+            <Camera className="h-10 w-10 text-gray-300" />
           </div>
           <div className="text-center">
             <p className="text-sm font-medium text-gray-700">Escanear etiqueta del producto</p>
-            <p className="text-xs text-gray-400 mt-1">Apunta la cámara al código QR o de barras del suministro</p>
+            <p className="text-xs text-gray-400 mt-1">Apunta la camara al codigo QR o de barras del suministro</p>
           </div>
           <button
             onClick={startScan}
             className="flex items-center gap-2 rounded-lg bg-gray-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
           >
-            <span>📷</span> Activar cámara
+            <Camera className="h-4 w-4" />
+            Activar camara
           </button>
         </div>
       )}
 
       {state === 'scanning' && (
         <div className="flex flex-col items-center gap-4 py-4">
-          {/* Simulated camera viewfinder */}
           <div className="relative h-40 w-64 overflow-hidden rounded-xl bg-gray-900">
             {/* Corner brackets */}
             <div className="absolute left-2 top-2 h-5 w-5 border-l-2 border-t-2 border-green-400" />
@@ -95,7 +96,6 @@ function QRScanner({ onScan }: { onScan: (data: string) => void }) {
               className="absolute left-3 right-3 h-0.5 bg-green-400 shadow-[0_0_8px_2px_rgba(74,222,128,0.6)] transition-none"
               style={{ top: `${progress}%` }}
             />
-            {/* Fake camera noise */}
             <div className="absolute inset-0 opacity-10">
               {Array.from({ length: 12 }).map((_, i) => (
                 <div
@@ -137,10 +137,10 @@ function QRScanner({ onScan }: { onScan: (data: string) => void }) {
 
       {state === 'success' && (
         <div className="flex flex-col items-center gap-3 py-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-100 text-3xl">
-            ✅
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
+            <CheckCircle className="h-7 w-7 text-green-600" />
           </div>
-          <p className="text-sm font-semibold text-green-700">Código leído correctamente</p>
+          <p className="text-sm font-semibold text-green-700">Codigo leido correctamente</p>
           <div className="w-full rounded-lg border border-green-200 bg-green-50 px-4 py-3">
             <p className="text-xs font-mono text-green-800 break-all">
               EPI-001-A | Epinephrine Auto-Injector<br />
@@ -178,7 +178,7 @@ export default function SupplyRequestPage() {
   const validate = () => {
     const e: Record<string, string> = {}
     if (!form.item) e.item = 'Selecciona un suministro'
-    if (!form.quantity || Number(form.quantity) <= 0) e.quantity = 'Indica una cantidad válida'
+    if (!form.quantity || Number(form.quantity) <= 0) e.quantity = 'Indica una cantidad valida'
     if (form.fromHospital === form.toHospital) e.toHospital = 'El hospital de destino debe ser diferente'
     return e
   }
@@ -189,9 +189,10 @@ export default function SupplyRequestPage() {
     if (Object.keys(errs).length > 0) { setErrors(errs); return }
     setErrors({})
 
+    const urgencyOpt = URGENCY_OPTIONS.find(u => u.value === form.urgency)!
     addNotification({
       type: 'supply_request',
-      title: `Solicitud de suministro — ${URGENCY_OPTIONS.find(u => u.value === form.urgency)?.label}`,
+      title: `Solicitud de suministro — ${urgencyOpt.label}`,
       message: `${fromH.name} solicita ${form.quantity} unidades de ${form.item}`,
       fromHospital: fromH.name,
       toHospital: toH.name,
@@ -219,35 +220,31 @@ export default function SupplyRequestPage() {
         <div className="flex flex-1 items-center justify-center p-6">
           <div className="w-full max-w-md text-center">
             <div className="mb-6 flex justify-center">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-4xl">
-                ✅
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
+                <CheckCircle className="h-10 w-10 text-green-600" />
               </div>
             </div>
             <h2 className="mb-2 text-xl font-bold text-gray-900">Solicitud enviada</h2>
             <p className="mb-6 text-sm text-gray-500">
-              La alarma ha sido enviada a <strong>{toH.name}</strong> y está pendiente de aprobación.
+              La alarma ha sido enviada a <strong>{toH.name}</strong> y esta pendiente de aprobacion.
             </p>
 
             <div className="mb-6 rounded-xl border border-gray-200 bg-gray-50 p-5 text-left space-y-3">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">De</span>
-                <span className="font-medium text-gray-900 text-right max-w-[60%]">{fromH.name}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Para</span>
-                <span className="font-medium text-gray-900 text-right max-w-[60%]">{toH.name}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Suministro</span>
-                <span className="font-medium text-gray-900">{form.item}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Cantidad</span>
-                <span className="font-medium text-gray-900">{form.quantity} unidades</span>
-              </div>
+              {[
+                ['De', fromH.name],
+                ['Para', toH.name],
+                ['Suministro', form.item],
+                ['Cantidad', `${form.quantity} unidades`],
+              ].map(([k, v]) => (
+                <div key={k} className="flex justify-between text-sm">
+                  <span className="text-gray-500">{k}</span>
+                  <span className="font-medium text-gray-900 text-right max-w-[60%]">{v}</span>
+                </div>
+              ))}
               <div className="flex justify-between text-sm">
                 <span className="text-gray-500">Urgencia</span>
-                <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${urgencyOpt.color}`}>
+                <span className={`rounded-full px-2 py-0.5 text-xs font-semibold flex items-center gap-1 ${urgencyOpt.color}`}>
+                  <span className={`h-1.5 w-1.5 rounded-full ${urgencyOpt.dot}`} />
                   {urgencyOpt.label}
                 </span>
               </div>
@@ -275,7 +272,6 @@ export default function SupplyRequestPage() {
 
   return (
     <div className="flex h-full flex-col">
-      {/* Header */}
       <div className="border-b border-gray-200 bg-white px-6 py-4">
         <h1 className="text-lg font-bold text-gray-900">Supply Request</h1>
         <p className="text-sm text-gray-500">Solicitar suministro urgente a otro hospital</p>
@@ -287,7 +283,10 @@ export default function SupplyRequestPage() {
 
             {/* Hospitals */}
             <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-soft">
-              <h2 className="mb-4 text-sm font-semibold text-gray-800">🏥 Hospitales</h2>
+              <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-800">
+                <Building2 className="h-4 w-4 text-gray-400" />
+                Hospitales
+              </h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="mb-1.5 block text-xs font-medium text-gray-600">Hospital solicitante (origen)</label>
@@ -319,7 +318,10 @@ export default function SupplyRequestPage() {
               {/* Route indicator */}
               <div className="mt-4 flex items-center gap-2 rounded-lg bg-gray-50 px-4 py-3">
                 <span className="max-w-[38%] truncate text-xs font-medium text-gray-700">{fromH.name}</span>
-                <span className="flex-1 text-center text-gray-300">→→→→→→→→</span>
+                <div className="flex flex-1 items-center justify-center">
+                  <div className="h-px flex-1 bg-gray-300" />
+                  <ArrowRight className="mx-1 h-3.5 w-3.5 text-gray-400" />
+                </div>
                 <span className="max-w-[38%] truncate text-right text-xs font-medium text-gray-700">{toH.name}</span>
               </div>
             </div>
@@ -334,7 +336,10 @@ export default function SupplyRequestPage() {
 
             {/* Item & Quantity */}
             <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-soft">
-              <h2 className="mb-4 text-sm font-semibold text-gray-800">📦 Suministro solicitado</h2>
+              <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-800">
+                <Package className="h-4 w-4 text-gray-400" />
+                Suministro solicitado
+              </h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="sm:col-span-2">
                   <label className="mb-1.5 block text-xs font-medium text-gray-600">Suministro</label>
@@ -349,7 +354,8 @@ export default function SupplyRequestPage() {
                   {errors.item && <p className="mt-1 text-xs text-red-500">{errors.item}</p>}
                   {form.scannedCode && (
                     <p className="mt-1.5 flex items-center gap-1 text-[10px] text-green-600">
-                      <span>✅</span> Rellenado por QR scan
+                      <CheckCircle className="h-3 w-3" />
+                      Rellenado por QR scan
                     </p>
                   )}
                 </div>
@@ -379,7 +385,10 @@ export default function SupplyRequestPage() {
 
             {/* Urgency */}
             <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-soft">
-              <h2 className="mb-4 text-sm font-semibold text-gray-800">⚡ Nivel de urgencia</h2>
+              <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-800">
+                <Zap className="h-4 w-4 text-gray-400" />
+                Nivel de urgencia
+              </h2>
               <div className="grid gap-2 sm:grid-cols-2">
                 {URGENCY_OPTIONS.map(opt => (
                   <label
@@ -398,9 +407,12 @@ export default function SupplyRequestPage() {
                       onChange={() => setForm(f => ({ ...f, urgency: opt.value as typeof form.urgency }))}
                       className="sr-only"
                     />
-                    <div>
-                      <p className="text-sm font-semibold">{opt.label}</p>
-                      <p className="text-xs opacity-75">{opt.desc}</p>
+                    <div className="flex items-start gap-2">
+                      <span className={`mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full ${opt.dot}`} />
+                      <div>
+                        <p className="text-sm font-semibold">{opt.label}</p>
+                        <p className="text-xs opacity-75">{opt.desc}</p>
+                      </div>
                     </div>
                   </label>
                 ))}
@@ -409,12 +421,15 @@ export default function SupplyRequestPage() {
 
             {/* Notes */}
             <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-soft">
-              <h2 className="mb-3 text-sm font-semibold text-gray-800">📝 Notas adicionales</h2>
+              <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-800">
+                <FileText className="h-4 w-4 text-gray-400" />
+                Notas adicionales
+              </h2>
               <textarea
                 rows={3}
                 value={form.notes}
                 onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
-                placeholder="Razón clínica de la solicitud, instrucciones especiales de transporte, etc."
+                placeholder="Razon clinica de la solicitud, instrucciones especiales de transporte, etc."
                 className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 resize-none"
               />
             </div>
@@ -422,9 +437,10 @@ export default function SupplyRequestPage() {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full rounded-xl bg-gray-900 px-6 py-3.5 text-base font-semibold text-white hover:bg-gray-800 transition-colors shadow-soft"
+              className="w-full flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-6 py-3.5 text-base font-semibold text-white hover:bg-gray-800 transition-colors shadow-soft"
             >
-              🚨 Enviar alarma al hospital receptor
+              <AlertTriangle className="h-4 w-4" />
+              Enviar alarma al hospital receptor
             </button>
           </form>
         </div>

@@ -29,7 +29,7 @@ export default function GeneralDashboardPage() {
                 view === 'spain' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
-              🇪🇸 España completa
+              España completa
             </button>
             {SPAIN_CCAA.map(c => (
               <button
