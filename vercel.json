@@ -3,6 +3,5 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "public": true,
-  "regions": ["sfo1"]
+"regions": ["sfo1"]
 }
