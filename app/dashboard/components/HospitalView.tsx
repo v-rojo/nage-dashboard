@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { AlertTriangle, Heart, Microscope, Stethoscope, Baby, Dna, MapPin } from 'lucide-react'
+import { AlertTriangle, TrendingDown, CheckCircle, TrendingUp, MapPin } from 'lucide-react'
 import { Hospital } from '@/lib/mock-data/hospitals'
 import { InventoryItem } from '@/lib/types'
 import { StatusBadge } from './StatusBadge'
@@ -86,19 +86,20 @@ export function HospitalView({ hospital }: { hospital: Hospital }) {
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-xl font-bold text-gray-900">{hospital.name}</h2>
-          <p className="flex items-center gap-1 text-sm text-gray-500">
-            <MapPin className="h-3.5 w-3.5" /> {hospital.city} · {hospital.beds} camas · {hospital.departments.length} departamentos
+          <p className="text-sm text-gray-500 flex items-center gap-1">
+            <MapPin className="h-3.5 w-3.5" />
+            {hospital.city} &middot; {hospital.beds} camas &middot; {hospital.departments.length} departamentos
           </p>
         </div>
-        <span className="text-xs text-gray-400">Última actualización: hace 2 min</span>
+        <span className="text-xs text-gray-400">Ultima actualizacion: hace 2 min</span>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <StatCard label="Crítico" value={stats.critical} color="red" icon={<span className="inline-block h-3 w-3 rounded-full bg-red-500" />} sub="requiere acción" />
-        <StatCard label="Stock Bajo" value={stats.low} color="amber" icon={<span className="inline-block h-3 w-3 rounded-full bg-amber-400" />} sub="por debajo del mínimo" />
-        <StatCard label="Normal" value={stats.healthy} color="green" icon={<span className="inline-block h-3 w-3 rounded-full bg-green-500" />} sub="en rango óptimo" />
-        <StatCard label="Exceso" value={stats.overstocked} color="blue" icon={<span className="inline-block h-3 w-3 rounded-full bg-blue-500" />} sub="por encima del máximo" />
+        <StatCard label="Critico" value={stats.critical} color="red" icon={AlertTriangle} sub="requiere accion" />
+        <StatCard label="Stock Bajo" value={stats.low} color="amber" icon={TrendingDown} sub="por debajo del minimo" />
+        <StatCard label="Normal" value={stats.healthy} color="green" icon={CheckCircle} sub="en rango optimo" />
+        <StatCard label="Exceso" value={stats.overstocked} color="blue" icon={TrendingUp} sub="por encima del maximo" />
       </div>
 
       {/* Dept filter */}
