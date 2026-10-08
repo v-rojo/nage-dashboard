@@ -3,22 +3,10 @@
 import { useState, useRef, useEffect } from 'react'
 import { Camera, CheckCircle, ArrowRight, AlertTriangle, Package, FileText, Zap, Building2 } from 'lucide-react'
 import { MADRID_HOSPITALS } from '@/lib/mock-data/hospitals'
+import { SURGICAL_CATALOG } from '@/lib/mock-data/catalog'
 import { useNotifications } from '../context/notifications'
 
-const ITEMS = [
-  'Epinephrine Auto-Injector',
-  'Surgical Gloves (Sterile)',
-  'Fentanyl Citrate 100mcg',
-  'Nitrile Exam Gloves',
-  'IV Saline 0.9% 500ml',
-  'Morphine Sulfate 10mg',
-  'Disposable Syringes 10ml',
-  'Blood Glucose Test Strips',
-  'Amoxicillin 500mg Capsules',
-  'Ibuprofen 400mg Tablets',
-  'Insulin Regular 100U/ml',
-  'Sterile Gauze Pads 4x4',
-]
+const ITEMS = SURGICAL_CATALOG.map(i => i.name)
 
 const URGENCY_OPTIONS = [
   { value: 'critical', label: 'Critico',  desc: 'Necesario en menos de 2 horas', color: 'border-red-300 bg-red-50 text-red-700',    dot: 'bg-red-500'    },
@@ -42,7 +30,7 @@ function QRScanner({ onScan }: { onScan: (data: string) => void }) {
         if (p >= 100) {
           clearInterval(intervalRef.current!)
           setState('success')
-          onScan('EPI-001-A | Epinephrine Auto-Injector | Lot: L2024-889 | Exp: 2026-08-15')
+          onScan('IS-470006 | da Vinci Xi - EndoWrist Large Needle Driver | Lot: L2026-114 | Exp: 2029-01-31')
           return 100
         }
         return p + 4
@@ -143,8 +131,8 @@ function QRScanner({ onScan }: { onScan: (data: string) => void }) {
           <p className="text-sm font-semibold text-green-700">Codigo leido correctamente</p>
           <div className="w-full rounded-lg border border-green-200 bg-green-50 px-4 py-3">
             <p className="text-xs font-mono text-green-800 break-all">
-              EPI-001-A | Epinephrine Auto-Injector<br />
-              Lot: L2024-889 | Exp: 2026-08-15
+              IS-470006 | da Vinci Xi - EndoWrist Large Needle Driver<br />
+              Lot: L2026-114 | Exp: 2029-01-31
             </p>
           </div>
           <button onClick={reset} className="text-xs text-gray-400 hover:text-gray-600 transition-colors">

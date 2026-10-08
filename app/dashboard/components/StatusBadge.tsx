@@ -4,22 +4,22 @@ import { StockStatus } from '@/lib/mock-data/hospitals'
 
 const CONFIG: Record<StockStatus, { label: string; className: string; dot: string }> = {
   critical: {
-    label: 'Critical',
+    label: 'Critico',
     className: 'bg-red-100 text-red-700 border border-red-200',
     dot: 'bg-red-500 animate-pulse',
   },
   low: {
-    label: 'Low',
+    label: 'Bajo',
     className: 'bg-amber-100 text-amber-700 border border-amber-200',
     dot: 'bg-amber-500',
   },
   healthy: {
-    label: 'Healthy',
+    label: 'Correcto',
     className: 'bg-green-100 text-green-700 border border-green-200',
     dot: 'bg-green-500',
   },
   overstocked: {
-    label: 'Overstocked',
+    label: 'Exceso',
     className: 'bg-blue-100 text-blue-700 border border-blue-200',
     dot: 'bg-blue-500',
   },

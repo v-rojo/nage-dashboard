@@ -1,11 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { AlertTriangle, TrendingDown, CheckCircle, Package, ChevronDown, ChevronUp, MapPin } from 'lucide-react'
+import { ChevronDown, ChevronUp, MapPin } from 'lucide-react'
 import { SPAIN_CCAA, getInventoryStats } from '@/lib/mock-data/hospitals'
 import { StatusBadge } from './StatusBadge'
-import { StatCard } from './StatCard'
-import { StockBar } from './StockBar'
+import { InventoryOverview } from './InventoryOverview'
 import { InventoryItem } from '@/lib/types'
 
 export function SpainOverview() {
@@ -14,66 +13,25 @@ export function SpainOverview() {
   const allInventory: InventoryItem[] = SPAIN_CCAA.flatMap(c =>
     c.hospitals.flatMap(h => h.inventory)
   )
-  const globalStats = getInventoryStats(allInventory)
 
   const totalHospitals = SPAIN_CCAA.reduce((s, c) => s + c.hospitals.length, 0)
   const totalBeds = SPAIN_CCAA.flatMap(c => c.hospitals).reduce((s, h) => s + h.beds, 0)
-
-  const criticalItems = allInventory
-    .filter(i => i.status === 'critical')
-    .slice(0, 6)
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold text-gray-900">Resumen Nacional &mdash; Espana</h2>
+        <h2 className="text-xl font-bold text-gray-900">Resumen nacional &mdash; España</h2>
         <p className="text-sm text-gray-500">
-          {SPAIN_CCAA.length} comunidades autonomas &middot; {totalHospitals} hospitales &middot; {totalBeds.toLocaleString()} camas
+          {SPAIN_CCAA.length} comunidades autónomas &middot; {totalHospitals} hospitales &middot; {totalBeds.toLocaleString('es-ES')} camas
         </p>
       </div>
 
-      {/* Global KPIs */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <StatCard label="Alertas Criticas" value={globalStats.critical} color="red" icon={AlertTriangle} sub="en toda Espana" />
-        <StatCard label="Stock Bajo" value={globalStats.low} color="amber" icon={TrendingDown} sub="por debajo minimo" />
-        <StatCard label="Suministros OK" value={globalStats.healthy} color="green" icon={CheckCircle} sub="en rango optimo" />
-        <StatCard label="Exceso Stock" value={globalStats.overstocked} color="blue" icon={Package} sub="sobre el maximo" />
-      </div>
-
-      {/* Critical items alert strip */}
-      {criticalItems.length > 0 && (
-        <div className="rounded-xl border border-red-200 bg-red-50 p-4">
-          <div className="mb-3 flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4 text-red-600" />
-            <p className="text-sm font-semibold text-red-700">Items en estado critico — requieren accion inmediata</p>
-          </div>
-          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-            {criticalItems.map(item => {
-              const hospital = SPAIN_CCAA.flatMap(c => c.hospitals).find(h =>
-                h.inventory.some(i => i.id === item.id)
-              )
-              return (
-                <div key={item.id} className="rounded-lg border border-red-200 bg-white p-3">
-                  <p className="text-xs font-semibold text-gray-900 truncate">{item.name}</p>
-                  <p className="text-xs text-gray-400 mb-1.5 truncate">{hospital?.name}</p>
-                  <StockBar
-                    quantity={item.quantity}
-                    minStock={item.minStock}
-                    maxStock={item.maxStock}
-                    status="critical"
-                  />
-                  <p className="mt-1 text-xs text-red-600">{item.quantity} / {item.maxStock} {item.unit}</p>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      )}
+      <InventoryOverview items={allInventory} showLocation />
 
       {/* CCAA breakdown */}
       <div>
-        <h3 className="mb-3 text-sm font-semibold text-gray-700">Por Comunidad Autonoma</h3>
+        <h3 className="mb-3 text-sm font-semibold text-gray-700">Por comunidad autónoma</h3>
         <div className="space-y-3">
           {SPAIN_CCAA.map(ccaa => {
             const ccaaInventory = ccaa.hospitals.flatMap(h => h.inventory)
@@ -96,7 +54,7 @@ export function SpainOverview() {
                     </div>
                     <div className="flex items-center gap-4 text-xs text-gray-400">
                       <span>{ccaa.hospitals.length} hospitales</span>
-                      <span>{ccaaInventory.length} items</span>
+                      <span>{ccaaInventory.length} referencias</span>
                       <span className="text-green-600 font-medium">{totalPct}% ok</span>
                     </div>
                   </div>

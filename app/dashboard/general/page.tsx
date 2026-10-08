@@ -26,7 +26,7 @@ export default function GeneralDashboardPage() {
             <button
               onClick={() => setView('spain')}
               className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
-                view === 'spain' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                view === 'spain' ? 'bg-teal-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
               España completa
@@ -36,7 +36,7 @@ export default function GeneralDashboardPage() {
                 key={c.id}
                 onClick={() => setView(c.id)}
                 className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
-                  view === c.id ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  view === c.id ? 'bg-teal-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
                 {c.name}

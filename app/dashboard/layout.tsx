@@ -1,11 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NotificationsProvider } from './context/notifications'
 import { Sidebar } from './components/Sidebar'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false)
+
+  // Start collapsed on narrow screens so the content keeps most of the width
+  useEffect(() => {
+    if (window.innerWidth < 768) setCollapsed(true)
+  }, [])
 
   return (
     <NotificationsProvider>

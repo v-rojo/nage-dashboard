@@ -55,7 +55,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
   }, [])
 
   const isActive = (href: string) =>
-    href === '/dashboard' ? pathname === '/dashboard' : pathname.startsWith(href)
+    href === '/' || href === '/dashboard' ? pathname === href : pathname.startsWith(href)
 
   return (
     <>
@@ -72,8 +72,9 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
         <div className="flex h-14 items-center justify-between border-b border-gray-100 px-3">
           {!collapsed && (
             <div className="flex items-center gap-2">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-teal-600 text-sm font-bold text-white">N</span>
               <span className="text-lg font-bold text-gray-900">NAGE</span>
-              <span className="rounded-full bg-blue-100 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700">
+              <span className="rounded-full bg-teal-50 px-1.5 py-0.5 text-[10px] font-semibold text-teal-700">
                 v2
               </span>
             </div>
@@ -101,7 +102,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
                 href={item.href}
                 className={`group relative flex items-center gap-3 rounded-lg px-2.5 py-2.5 text-sm transition-all ${
                   active
-                    ? 'bg-gray-900 text-white'
+                    ? 'bg-teal-50 text-teal-700'
                     : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                 }`}
                 title={collapsed ? item.label : undefined}
@@ -111,7 +112,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
                   <div className="min-w-0 flex-1">
                     <p className="font-medium leading-tight">{item.label}</p>
                     {'sub' in item && item.sub && (
-                      <p className={`text-[10px] leading-tight mt-0.5 ${active ? 'text-gray-300' : 'text-gray-400'}`}>
+                      <p className={`text-[10px] leading-tight mt-0.5 ${active ? 'text-teal-600/70' : 'text-gray-400'}`}>
                         {item.sub}
                       </p>
                     )}
@@ -123,7 +124,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
                   </span>
                 )}
                 {collapsed && active && (
-                  <span className="absolute right-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-l-full bg-gray-900" />
+                  <span className="absolute right-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-l-full bg-teal-600" />
                 )}
               </Link>
             )
@@ -212,7 +213,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
                 href={item.href}
                 className={`flex items-center gap-3 rounded-lg px-2.5 py-2.5 text-sm transition-all ${
                   active
-                    ? 'bg-gray-900 text-white'
+                    ? 'bg-teal-50 text-teal-700'
                     : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                 }`}
                 title={collapsed ? item.label : undefined}

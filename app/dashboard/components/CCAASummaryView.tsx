@@ -2,19 +2,17 @@
 
 import { useState } from 'react'
 import { ChevronRight, MapPin, Building2 } from 'lucide-react'
-import { AlertTriangle, TrendingDown, CheckCircle, TrendingUp } from 'lucide-react'
 import { CCAASummary, getInventoryStats } from '@/lib/mock-data/hospitals'
 import { StatusBadge } from './StatusBadge'
 import { StockBar } from './StockBar'
-import { StatCard } from './StatCard'
+import { InventoryOverview } from './InventoryOverview'
 import { HospitalView } from './HospitalView'
 
 export function CCAASummaryView({ ccaa }: { ccaa: CCAASummary }) {
   const [selectedHospital, setSelectedHospital] = useState<string | null>(null)
 
   const allInventory = ccaa.hospitals.flatMap(h => h.inventory)
-  const stats = getInventoryStats(allInventory)
-
+  
   const hospital = ccaa.hospitals.find(h => h.id === selectedHospital)
 
   if (hospital) {
@@ -43,13 +41,9 @@ export function CCAASummaryView({ ccaa }: { ccaa: CCAASummary }) {
         </p>
       </div>
 
-      {/* Global stats */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <StatCard label="Critico" value={stats.critical} color="red" icon={AlertTriangle} sub="items criticos" />
-        <StatCard label="Stock Bajo" value={stats.low} color="amber" icon={TrendingDown} sub="items bajos" />
-        <StatCard label="Normal" value={stats.healthy} color="green" icon={CheckCircle} sub="items ok" />
-        <StatCard label="Exceso" value={stats.overstocked} color="blue" icon={TrendingUp} sub="exceso" />
-      </div>
+      <InventoryOverview items={allInventory} showLocation />
+
+      <h3 className="pt-2 text-base font-semibold text-gray-900">Hospitales</h3>
 
       {/* Hospital cards */}
       <div className="grid gap-4 sm:grid-cols-2">

@@ -15,7 +15,7 @@ export default function MainDashboardPage() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-lg font-bold text-gray-900">Main Dashboard</h1>
-            <p className="text-sm text-gray-500">Inventario de tu hospital</p>
+            <p className="text-sm text-gray-500">Material quirurgico de alto valor de tu hospital</p>
           </div>
           {/* Hospital selector */}
           <div className="flex flex-wrap gap-2">
@@ -25,7 +25,7 @@ export default function MainDashboardPage() {
                 onClick={() => setSelectedId(h.id)}
                 className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
                   selectedId === h.id
-                    ? 'bg-gray-900 text-white'
+                    ? 'bg-teal-600 text-white'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >

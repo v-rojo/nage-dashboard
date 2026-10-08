@@ -1,6 +1,7 @@
 export interface InventoryItem {
   id: string
   name: string
+  manufacturer: string
   sku: string
   category: string
   department: string
@@ -12,7 +13,9 @@ export interface InventoryItem {
   expirationDate: string
   supplier: string
   consumptionRate: number
+  leadTimeDays: number
   aiPredictedDemand: number
+  location?: string
   status: 'critical' | 'low' | 'healthy' | 'overstocked'
 }
 
