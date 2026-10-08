@@ -1,8 +1,8 @@
-# NAGE Dashboard 🏥
+# NAGE Dashboard
 
 **NAGE** stands for **AI-powered hospital inventory management and analysis engine**. This is a modern, production-grade dashboard for healthcare professionals to manage medical supplies, predict demand using Claude AI, and optimize procurement workflows.
 
-## 🎯 Project Overview
+## Project Overview
 
 This MVP (Minimum Viable Product) solves critical challenges in hospital inventory management:
 
@@ -12,7 +12,7 @@ This MVP (Minimum Viable Product) solves critical challenges in hospital invento
 - **Procurement Optimization**: AI suggests optimal reorder quantities and identifies cost-saving opportunities
 - **Multi-Department Support**: Centralized view with department-level filtering for large hospital networks
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 - **Frontend**: Next.js 14 + React 18 + TypeScript
 - **Styling**: Tailwind CSS + shadcn/ui components
@@ -20,7 +20,7 @@ This MVP (Minimum Viable Product) solves critical challenges in hospital invento
 - **Charts**: Recharts for data visualization
 - **Deployment**: Vercel (automatic CI/CD)
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js 18+ installed
@@ -54,7 +54,7 @@ npm run dev
 5. **Open in browser**
 Navigate to `http://localhost:3000`
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 nage-dashboard/
@@ -98,7 +98,7 @@ nage-dashboard/
 └── next.config.js        # Next.js config
 ```
 
-## 🧠 Claude AI Integration
+## Claude AI Integration
 
 The dashboard uses Claude API for intelligent inventory analysis:
 
@@ -115,14 +115,14 @@ The dashboard uses Claude API for intelligent inventory analysis:
 4. Create a new key
 5. Add to `.env.local`: `ANTHROPIC_API_KEY=sk-ant-...`
 
-## 🎨 Design System
+## Design System
 
 - **Primary Color**: Professional Blue (#0084D4)
 - **Status Colors**: Green (healthy), Yellow (warning), Red (critical)
 - **Typography**: Inter font family
 - **Components**: Built with shadcn/ui
 
-## 🚢 Deployment to Vercel
+## Deployment to Vercel
 
 ### Automatic Deployment (Recommended)
 
@@ -142,7 +142,7 @@ vercel login
 vercel
 ```
 
-## 📊 Features
+## Features
 
 ### Dashboard Overview
 - KPI cards (inventory value, alerts, expiring items)
@@ -180,7 +180,7 @@ vercel
 - Forecast accuracy
 - Savings tracking
 
-## 📝 Environment Variables
+## Environment Variables
 
 Create `.env.local`:
 
@@ -195,7 +195,7 @@ NEXT_PUBLIC_AI_ENABLED=true
 NEXT_PUBLIC_USE_MOCK_DATA=true
 ```
 
-## 🧪 Development
+## Development
 
 ```bash
 # Run development server
@@ -214,7 +214,7 @@ npm run type-check
 npm run lint
 ```
 
-## 📚 Documentation
+## Documentation
 
 Each folder contains a `README.md` explaining:
 - **Why** it exists
@@ -226,7 +226,7 @@ See:
 - `hooks/README.md` - Custom hooks guide
 - `components/README.md` - Component architecture
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [ ] Database integration (MongoDB/Firebase)
 - [ ] User authentication (Auth0)
@@ -237,18 +237,18 @@ See:
 - [ ] Multi-hospital network support
 - [ ] HIPAA compliance reporting
 
-## 🤝 Contributing
+## Contributing
 
 1. Create a feature branch: `git checkout -b feature/your-feature`
 2. Commit changes: `git commit -am 'Add feature'`
 3. Push to branch: `git push origin feature/your-feature`
 4. Create a Pull Request
 
-## 📄 License
+## License
 
 MIT License - Feel free to use this for commercial or personal projects.
 
-## 🆘 Support & Questions
+## Support & Questions
 
 For issues or questions:
 - Open a GitHub issue
@@ -257,6 +257,6 @@ For issues or questions:
 
 ---
 
-**Made with ❤️ for better hospital inventory management**
+**Made for better hospital inventory management**
 
 Last Updated: June 2026
